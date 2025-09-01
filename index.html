@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>شركة ايماكسا للتوريدات العامة– لوحة إدارة ومخزن + Landing</title>
+  <!-- QRCode lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root{
+      --bg:#f8f9fa; --card:#ffffff; --muted:#e9ecef; --accent:#3b82f6; --accent-2:#22c55e; --text:#212529; --sub:#6c757d; --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo","Segoe UI",system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:16px}
+
+    /* Header */
+    header{position:sticky;top:0;background:rgba(248,249,250,.8);backdrop-filter:blur(6px);border-bottom:1px solid #dee2e6;z-index:40}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4)}
+    .title{font-weight:800}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px}
+    .tab{padding:8px 12px;border:1px solid #dee2e6;background:var(--card);border-radius:12px;cursor:pointer}
+    .tab.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(59,130,246,.25) inset}
+
+    /* Layout */
+    .grid{display:grid;gap:16px}
+    .grid-2{grid-template-columns:1.2fr .8fr}
+    @media(max-width:900px){.grid-2{grid-template-columns:1fr}}
+
+    /* Cards */
+    .card{background:var(--card);border:1px solid #dee2e6;border-radius:16px;padding:16px}
+    .card h3{margin:0 0 8px 0}
+    .muted{color:var(--sub);font-size:.9rem}
+
+    /* Forms */
+    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-3{grid-column:span 3}
+    @media(max-width:700px){.col-6,.col-4,.col-3{grid-column:span 12}}
+    label{display:block;margin:6px 0 4px;color:#495057}
+    input,select,textarea{width:100%;padding:10px;background:#ffffff;border:1px solid #dee2e6;border-radius:12px;color:#212529}
+    textarea{min-height:70px}
+
+    /* Buttons */
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .btn{padding:10px 14px;border:1px solid #dee2e6;background:#ffffff;border-radius:12px;color:#212529;cursor:pointer}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .btn.success{background:var(--accent-2);border-color:var(--accent-2)}
+    .btn.danger{background:var(--danger);border-color:var(--danger)}
+    .btn.ghost{background:transparent;border-color:#dee2e6}
+
+    /* Tables */
+    table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden}
+    th,td{padding:10px;border-bottom:1px solid #dee2e6;text-align:right}
+    th{background:#f8f9fa;color:#6c757d}
+    tr:hover td{background:#e9ecef}
+
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #dee2e6;font-size:.8rem;color:#6c757d}
+    .flex{display:flex;gap:12px;align-items:center}
+    .right{margin-inline-start:auto}
+
+    /* Invoice Modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
+    .modal.open{display:flex}
+    .paper{background:#fff;color:#111;border-radius:12px;width:min(900px,100%);padding:20px}
+    .paper h2{margin:0}
+    .paper .row div{color:#111}
+    .invoice-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e5e7eb;padding-bottom:10px;margin-bottom:10px}
+    .invoice-meta{font-size:.95rem;color:#374151}
+    .print-only{display:none}
+    @media print{
+      header,.no-print{display:none!important}
+      .modal{position:static;display:block;background:none}
+      .paper{box-shadow:none;width:100%;}
+      .print-only{display:block}
+    }
+
+    /* Landing tags */
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div class="title">شركة ايماكسا للتوريدات العامة</div>
+          <div class="muted" style="font-size:.9rem">نظام إداري (نسخة واجهة فقط – بيانات محلية)</div>
+        </div>
+      </div>
+      <nav class="tabs no-print">
+        <a class="tab active" data-tab="landing">الواجهة العامة</a>
+        <a class="tab" data-tab="items">الأقسام والأصناف</a>
+        <a class="tab" data-tab="clients">العملاء</a>
+        <a class="tab" data-tab="companies">الشركات/الموردون</a>
+        <a class="tab" data-tab="po">أمر شراء</a>
+        <a class="tab" data-tab="settings">إعدادات المؤسسة</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- LANDING -->
+    <section class="card" id="tab-landing">
+      <h3>بحث الأصناف (Landing)</h3>
+      <div class="row">
+        <div class="col-4">
+          <label>القسم</label>
+          <select id="landingSection"></select>
+        </div>
+        <div class="col-4">
+          <label>فرز السعر</label>
+          <select id="landingSort">
+            <option value="">— لا يوجد —</option>
+            <option value="asc">الأقل سعراً</option>
+            <option value="desc">الأعلى سعراً</option>
+          </select>
+        </div>
+        <div class="col-4">
+          <label>بحث بالنص</label>
+          <input id="landingQuery" placeholder="اسم الصنف…">
+        </div>
+        <div class="col-12 actions">
+          <button class="btn primary" id="landingSearchBtn">بحث</button>
+          <button class="btn ghost" id="landingClear">مسح</button>
+        </div>
+      </div>
+      <div class="tags" id="landingMeta"></div>
+      <div id="landingResults"></div>
+
+      <hr style="border-color:#dee2e6;margin:20px 0">
+
+      <h3>بحث الشركات والعملاء بالمدينة</h3>
+      <div class="row">
+        <div class="col-6">
+          <label>اسم المدينة</label>
+          <input id="cityQuery" placeholder="مثال: المجاردة">
+        </div>
+        <div class="col-6 actions">
+          <button class="btn" id="citySearchBtn">بحث بالمدينة</button>
+        </div>
+      </div>
+      <div class="grid" id="cityResults" style="margin-top:10px"></div>
+    </section>
+
+    <!-- ITEMS -->
+    <section class="grid grid-2" id="tab-items" style="display:none">
+      <div class="card">
+        <h3>إضافة قسم</h3>
+        <div class="row">
+          <div class="col-8">
+            <label>اسم القسم</label>
+            <input id="secName" placeholder="أدوات مكتبية">
+          </div>
+          <div class="col-4 actions">
+            <button class="btn success" id="addSectionBtn">+ إضافة قسم</button>
+          </div>
+        </div>
+        <div class="muted" id="sectionsCount"></div>
+        <ul id="sectionsList" class="tags"></ul>
+      </div>
+
+      <div class="card">
+        <h3>إضافة صنف</h3>
+        <div class="row">
+          <div class="col-6">
+            <label>القسم</label>
+            <select id="itemSection"></select>
+          </div>
+          <div class="col-6">
+            <label>اسم الصنف</label>
+            <input id="itemName" placeholder="دفتر A4">
+          </div>
+          <div class="col-4">
+            <label>سعر التكلفة</label>
+            <input type="number" id="itemCost" placeholder="0" min="0" step="0.01">
+          </div>
+          <div class="col-4">
+            <label>الكمية</label>
+            <input type="number" id="itemQty" placeholder="0" min="0" step="1">
+          </div>
+          <div class="col-4">
+            <label>ملاحظات</label>
+            <input id="itemNote" placeholder="مثال: جودة ممتازة">
+          </div>
+          <div class="col-12 actions">
+            <button class="btn success" id="addItemBtn">+ إضافة صنف</button>
+            <button class="btn ghost" id="clearItemBtn">مسح</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-12">
+        <h3>الأصناف</h3>
+        <div class="row">
+          <div class="col-4"><input id="itemsFilterText" placeholder="بحث…"></div>
+          <div class="col-4">
+            <select id="itemsFilterSection"></select>
+          </div>
+          <div class="col-4">
+            <select id="itemsSort">
+              <option value="">— ترتيب —</option>
+              <option value="asc">الأقل سعراً</option>
+              <option value="desc">الأعلى سعراً</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:10px;overflow:auto">
+          <table id="itemsTable">
+            <thead>
+              <tr>
+                <th>#</th><th>القسم</th><th>الصنف</th><th>التكلفة</th><th>الكمية</th><th>ملاحظات</th><th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENTS -->
+    <section class="grid grid-2" id="tab-clients" style="display:none">
+      <div class="card">
+        <h3>إضافة عميل</h3>
+        <div class="row">
+          <div class="col-6"><label>الاسم التجاري</label><input id="clName"></div>
+          <div class="col-6"><label>المدينة</label><input id="clCity"></div>
+          <div class="col-6"><label>السجل التجاري</label><input id="clCR"></div>
+          <div class="col-6"><label>الرقم الضريبي</label><input id="clVAT"></div>
+          <div class="col-6"><label>المجال</label><input id="clSector" placeholder="أدوات مكتبية/نظافة…"></div>
+          <div class="col-6"><label>اسم المسئول</label><input id="clContact"></div>
+          <div class="col-6"><label>جوال</label><input id="clMobile"></div>
+          <div class="col-6"><label>هاتف</label><input id="clPhone"></div>
+          <div class="col-12 actions">
+            <button class="btn success" id="addClientBtn">+ إضافة عميل</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>العملاء</h3>
+        <div class="row">
+          <div class="col-6"><input id="clSearch" placeholder="بحث بالاسم/المدينة"></div>
+          <div class="col-6 actions"><button class="btn" id="clExport">تصدير JSON</button></div>
+        </div>
+        <div style="margin-top:10px;max-height:420px;overflow:auto">
+          <table id="clientsTable"><thead><tr><th>#</th><th>الاسم</th><th>مدينة</th><th>سجل</th><th>ضريبي</th><th>مسئول</th><th>جوال</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPANIES -->
+    <section class="grid grid-2" id="tab-companies" style="display:none">
+      <div class="card">
+        <h3>إضافة شركة/مورد</h3>
+        <div class="row">
+          <div class="col-6"><label>اسم الشركة</label><input id="coName"></div>
+          <div class="col-6"><label>المدينة</label><input id="coCity"></div>
+          <div class="col-6"><label>السجل التجاري</label><input id="coCR"></div>
+          <div class="col-6"><label>الرقم الضريبي</label><input id="coVAT"></div>
+          <div class="col-12 actions"><button class="btn success" id="addCompanyBtn">+ إضافة شركة</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>الشركات/الموردون</h3>
+        <div class="row">
+          <div class="col-8"><input id="coSearch" placeholder="بحث بالاسم/المدينة"></div>
+        </div>
+        <div style="margin-top:10px;max-height:420px;overflow:auto">
+          <table id="companiesTable"><thead><tr><th>#</th><th>الاسم</th><th>مدينة</th><th>سجل</th><th>ضريبي</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PURCHASE ORDER -->
+    <section class="grid grid-2" id="tab-po" style="display:none">
+      <div class="card">
+        <h3>إنشاء أمر شراء</h3>
+        <div class="row">
+          <div class="col-6"><label>العميل</label><select id="poClient"></select></div>
+          <div class="col-6"><label>تاريخ</label><input type="date" id="poDate"></div>
+          <div class="col-12"><label>ملاحظة</label><input id="poNote" placeholder="مثال: توريد شهري"></div>
+        </div>
+        <h4 style="margin-top:14px">إضافة صنف</h4>
+        <div class="row">
+          <div class="col-6"><label>الصنف</label><select id="poItem"></select></div>
+          <div class="col-3"><label>الكمية</label><input type="number" id="poQty" min="1" step="1" value="1"></div>
+          <div class="col-3 actions"><button class="btn" id="addLine">+ إضافة بند</button></div>
+        </div>
+        <div style="margin-top:10px;overflow:auto">
+          <table id="poLines"><thead><tr><th>#</th><th>الصنف</th><th>التكلفة</th><th>الكمية</th><th>الإجمالي</th><th>حذف</th></tr></thead><tbody></tbody><tfoot><tr><th colspan="4" style="text-align:left">الإجمالي</th><th id="poTotal">0</th><th></th></tr></tfoot></table>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="createPO">إنشاء الفاتورة</button>
+          <button class="btn ghost" id="clearPO">مسح</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>أوامر سابقة</h3>
+        <div style="max-height:500px;overflow:auto">
+          <table id="ordersTable"><thead><tr><th>#</th><th>تاريخ</th><th>عميل</th><th>بنود</th><th>الإجمالي</th><th>عرض الفاتورة</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="card" id="tab-settings" style="display:none">
+      <h3>بيانات المؤسسة (تظهر في الفاتورة)</h3>
+      <div class="row">
+        <div class="col-6"><label>اسم المؤسسة</label><input id="stName" placeholder="شركة ايماكسا للتوريدات العامة"></div>
+        <div class="col-6"><label>المدينة</label><input id="stCity" placeholder="المجاردة"></div>
+        <div class="col-6"><label>السجل التجاري</label><input id="stCR" placeholder=""></div>
+        <div class="col-6"><label>الرقم الضريبي</label><input id="stVAT" placeholder=""></div>
+        <div class="col-12"><label>عنوان</label><input id="stAddr" placeholder="منطقة عسير – محافظة المجاردة – شارع بدر"></div>
+        <div class="col-12 actions"><button class="btn success" id="saveSettings">حفظ</button></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- INVOICE MODAL -->
+  <div class="modal" id="invoiceModal">
+    <div class="paper" id="invoicePaper">
+      <div class="invoice-head">
+        <div>
+          <h2 id="invCompany">—</h2>
+          <div class="invoice-meta" id="invAddr">—</div>
+          <div class="invoice-meta" id="invCRVAT">—</div>
+        </div>
+        <div>
+          <div id="qrcode"></div>
+          <div class="invoice-meta"></div>
+        </div>
+      </div>
+      <div class="row" style="margin:6px 0">
+        <div class="col-6"><strong>فاتورة رقم:</strong> <span id="invNo"></span></div>
+        <div class="col-6"><strong>التاريخ:</strong> <span id="invDate"></span></div>
+        <div class="col-6"><strong>العميل:</strong> <span id="invClient"></span></div>
+        <div class="col-6"><strong>ملاحظة:</strong> <span id="invNote"></span></div>
+      </div>
+      <table style="margin-top:10px">
+        <thead><tr><th>#</th><th>الصنف</th><th>التكلفة</th><th>الكمية</th><th>الإجمالي</th></tr></thead>
+        <tbody id="invBody"></tbody>
+        <tfoot><tr><th colspan="4" style="text-align:left">الإجمالي</th><th id="invTotal">0</th></tr></tfoot>
+      </table>
+      <div class="actions no-print" style="justify-content:flex-end;margin-top:12px">
+        <button class="btn" id="closeInv">إغلاق</button>
+        <button class="btn primary" onclick="window.print()">طباعة/حفظ PDF</button>
+      </div>
+      <div class="print-only" style="margin-top:8px;font-size:.9rem">* تم إنشاء هذه الفاتورة من نظام داخلي (نسخة واجهة فقط).</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== بسيطة: قاعدة بيانات محلية =====
+    const DB_KEY = 'mr_inventory_v1';
+    const nowISO = () => new Date().toISOString();
+    const loadDB = () => JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+    const saveDB = (db) => localStorage.setItem(DB_KEY, JSON.stringify(db));
+    const initDB = () => {
+      const current = loadDB();
+      if(!current.sections){
+        const seed = {
+          sections: ['أدوات مكتبية','أدوات نظافة'],
+          items: [
+            {id:1, section:'أدوات مكتبية', name:'دفتر A4', cost:8.5, qty:50, note:'ورق 70جم', created:nowISO()},
+            {id:2, section:'أدوات مكتبية', name:'قلم حبر', cost:2.25, qty:200, note:'أزرق', created:nowISO()},
+            {id:3, section:'أدوات نظافة', name:'كلور 3 لتر', cost:18.0, qty:30, note:'مركز', created:nowISO()},
+          ],
+          companies: [
+            {id:1,name:'مورد الخليج',city:'أبها',cr:'12345',vat:'3000000001'},
+          ],
+          clients: [
+            {id:1,name:'مدارس المجاردة الأهلية',city:'المجاردة',cr:'101010',vat:'3022222222',sector:'تعليمي',contact:'أحمد',mobile:'0500000000',phone:'017000000'},
+          ],
+          orders: [],
+          settings: {name:'شركة ايماكسا للتوريدات العامة',city:'المجاردة',cr:'',vat:'',addr:'منطقة عسير – محافظة المجاردة – شارع بدر'},
+          seq: {item:4, company:2, client:2, order:1}
+        };
+        saveDB(seed);
+      }
+    }
+
+    // ===== Helpers =====
+    const $ = (id)=>document.getElementById(id);
+    const fmt = (n)=> Number(n||0).toLocaleString('ar-SA',{minimumFractionDigits:2, maximumFractionDigits:2});
+
+    // ===== Tabs =====
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const id = t.dataset.tab;
+        document.querySelectorAll('main section').forEach(s=>s.style.display='none');
+        $(`tab-${id}`).style.display = id==='items' || id==='po' || id==='clients' || id==='companies' ? 'grid':'block';
+        // refresh data when switched
+        if(id==='items'){renderSections();fillSectionsSelects();renderItems();}
+        if(id==='clients'){renderClients();}
+        if(id==='companies'){renderCompanies();}
+        if(id==='po'){fillPOSelectors();renderOrders();}
+        if(id==='landing'){fillLandingSections();}
+        if(id==='settings'){loadSettingsForm();}
+      });
+    });
+
+    // ===== Sections & Items =====
+    function renderSections(){
+      const db = loadDB();
+      $('sectionsList').innerHTML = db.sections.map(s=>`<span class="pill">${s}</span>`).join('');
+      $('sectionsCount').textContent = `الأقسام: ${db.sections.length}`;
+    }
+    function fillSectionsSelects(){
+      const db = loadDB();
+      const opts = db.sections.map(s=>`<option value="${s}">${s}</option>`).join('');
+      $('itemSection').innerHTML = opts;
+      $('itemsFilterSection').innerHTML = `<option value="">كل الأقسام</option>`+opts;
+    }
+    $('addSectionBtn').onclick = ()=>{
+      const name = $('secName').value.trim();
+      if(!name) return alert('اكتب اسم القسم');
+      const db = loadDB();
+      if(!db.sections.includes(name)) db.sections.push(name);
+      saveDB(db);
+      $('secName').value='';
+      renderSections();fillSectionsSelects();fillLandingSections();
+    }
+
+    $('addItemBtn').onclick = ()=>{
+      const db = loadDB();
+      const name = $('itemName').value.trim();
+      if(!name) return alert('اكتب اسم الصنف');
+      const it = {
+        id: db.seq.item++,
+        section: $('itemSection').value,
+        name,
+        cost: Number($('itemCost').value||0),
+        qty: Number($('itemQty').value||0),
+        note: $('itemNote').value.trim(),
+        created: nowISO()
+      };
+      db.items.push(it); saveDB(db);
+      $('itemName').value=''; $('itemCost').value=''; $('itemQty').value=''; $('itemNote').value='';
+      renderItems();
+    }
+    $('clearItemBtn').onclick = ()=>{
+      $('itemName').value=''; $('itemCost').value=''; $('itemQty').value=''; $('itemNote').value='';
+    }
+
+    function renderItems(){
+      const db = loadDB();
+      let arr = [...db.items];
+      const q = $('itemsFilterText').value.trim();
+      const s = $('itemsFilterSection').value;
+      const sort = $('itemsSort').value;
+      if(q) arr = arr.filter(i=> i.name.includes(q));
+      if(s) arr = arr.filter(i=> i.section===s);
+      if(sort==='asc') arr.sort((a,b)=>a.cost-b.cost);
+      if(sort==='desc') arr.sort((a,b)=>b.cost-a.cost);
+      const tbody = $('itemsTable').querySelector('tbody');
+      tbody.innerHTML = arr.map((i,idx)=>`
+        <tr>
+          <td>${idx+1}</td>
+          <td>${i.section}</td>
+          <td>${i.name}</td>
+          <td>${fmt(i.cost)}</td>
+          <td>${i.qty}</td>
+          <td>${i.note||''}</td>
+          <td>
+            <button class="btn ghost" onclick="incQty(${i.id},1)">+1</button>
+            <button class="btn ghost" onclick="incQty(${i.id},-1)">-1</button>
+            <button class="btn danger" onclick="delItem(${i.id})">حذف</button>
+          </td>
+        </tr>`).join('');
+    }
+    function incQty(id,delta){
+      const db = loadDB();
+      const it = db.items.find(x=>x.id===id); if(!it) return;
+      it.qty = Math.max(0, (it.qty||0)+delta);
+      saveDB(db); renderItems();
+    }
+    function delItem(id){
+      if(!confirm('تأكيد حذف الصنف؟')) return;
+      const db = loadDB(); db.items = db.items.filter(x=>x.id!==id); saveDB(db); renderItems();
+    }
+    $('itemsFilterText').oninput = renderItems;
+    $('itemsFilterSection').onchange = renderItems;
+    $('itemsSort').onchange = renderItems;
+
+    // ===== Clients =====
+    $('addClientBtn').onclick = ()=>{
+      const db = loadDB();
+      const it = {
+        id: db.seq.client++,
+        name: $('clName').value.trim(), city: $('clCity').value.trim(), cr: $('clCR').value.trim(), vat: $('clVAT').value.trim(),
+        sector: $('clSector').value.trim(), contact: $('clContact').value.trim(), mobile: $('clMobile').value.trim(), phone: $('clPhone').value.trim(),
+      };
+      if(!it.name) return alert('اسم العميل مطلوب');
+      db.clients.push(it); saveDB(db); renderClients();
+      ['clName','clCity','clCR','clVAT','clSector','clContact','clMobile','clPhone'].forEach(id=>$(id).value='');
+    }
+    function renderClients(){
+      const db = loadDB();
+      const q = $('clSearch').value?.trim()||'';
+      const arr = db.clients.filter(c=> !q || [c.name,c.city].some(x=> x?.includes(q)));
+      $('clientsTable').querySelector('tbody').innerHTML = arr.map((c,i)=>`<tr>
+        <td>${i+1}</td><td>${c.name}</td><td>${c.city||''}</td><td>${c.cr||''}</td><td>${c.vat||''}</td><td>${c.contact||''}</td><td>${c.mobile||''}</td>
+      </tr>`).join('');
+      fillPOSelectors();
+    }
+    $('clSearch').oninput = renderClients;
+    $('clExport').onclick = ()=>{
+      const data = JSON.stringify(loadDB().clients,null,2);
+      const blob = new Blob([data], {type:'application/json'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'clients.json'; a.click();
+    }
+
+    // ===== Companies =====
+    $('addCompanyBtn').onclick = ()=>{
+      const db = loadDB();
+      const it = {id: db.seq.company++, name:$('coName').value.trim(), city:$('coCity').value.trim(), cr:$('coCR').value.trim(), vat:$('coVAT').value.trim()};
+      if(!it.name) return alert('اسم الشركة مطلوب');
+      db.companies.push(it); saveDB(db); renderCompanies();
+      ['coName','coCity','coCR','coVAT'].forEach(id=>$(id).value='');
+    }
+    function renderCompanies(){
+      const db = loadDB();
+      const q = $('coSearch').value?.trim()||'';
+      const arr = db.companies.filter(c=> !q || [c.name,c.city].some(x=> x?.includes(q)));
+      $('companiesTable').querySelector('tbody').innerHTML = arr.map((c,i)=>`<tr>
+        <td>${i+1}</td><td>${c.name}</td><td>${c.city||''}</td><td>${c.cr||''}</td><td>${c.vat||''}</td>
+      </tr>`).join('');
+    }
+    $('coSearch').oninput = renderCompanies;
+
+    // ===== Purchase Order =====
+    function fillPOSelectors(){
+      const db = loadDB();
+      $('poClient').innerHTML = db.clients.map(c=>`<option value="${c.id}">${c.name} – ${c.city||''}</option>`).join('');
+      $('poItem').innerHTML = db.items.map(i=>`<option value="${i.id}">${i.name} (${i.section}) – ${fmt(i.cost)}</option>`).join('');
+      if(!$('poDate').value) $('poDate').value = new Date().toISOString().slice(0,10);
+    }
+    let currentLines = [];
+    function renderLines(){
+      const db = loadDB();
+      const tbody = $('poLines').querySelector('tbody');
+      tbody.innerHTML = currentLines.map((ln,idx)=>{
+        const item = db.items.find(i=>i.id==ln.itemId);
+        const total = (item?.cost||0) * ln.qty;
+        return `<tr>
+          <td>${idx+1}</td><td>${item?.name||'?'} (${item?.section||''})</td><td>${fmt(item?.cost||0)}</td><td>${ln.qty}</td><td>${fmt(total)}</td>
+          <td><button class='btn danger' onclick='delLine(${idx})'>حذف</button></td>
+        </tr>`
+      }).join('');
+      const grand = currentLines.reduce((s,ln)=>{
+        const it = db.items.find(i=>i.id==ln.itemId); return s + (it?.cost||0)*ln.qty;
+      },0);
+      $('poTotal').textContent = fmt(grand);
+    }
+    $('addLine').onclick = ()=>{
+      const itemId = Number($('poItem').value||0);
+      const qty = Number($('poQty').value||0);
+      if(!itemId || qty<=0) return alert('اختر الصنف والكمية');
+      currentLines.push({itemId, qty}); renderLines();
+    }
+    window.delLine = (i)=>{currentLines.splice(i,1); renderLines();}
+
+    $('clearPO').onclick = ()=>{currentLines=[]; renderLines(); $('poNote').value='';}
+
+    $('createPO').onclick = ()=>{
+      const db = loadDB();
+      if(currentLines.length===0) return alert('أضف بنوداً أولاً');
+      const id = db.seq.order++;
+      const clientId = Number($('poClient').value);
+      const date = $('poDate').value || new Date().toISOString().slice(0,10);
+      const note = $('poNote').value.trim();
+      const order = {id, clientId, date, note, lines: currentLines.map(x=>({...x})), total: currentLines.reduce((s,ln)=>{const it=db.items.find(i=>i.id==ln.itemId);return s+(it?.cost||0)*ln.qty;},0)};
+      // Update stock quantities
+      order.lines.forEach(ln=>{ const it = db.items.find(i=>i.id==ln.itemId); if(it) it.qty = Math.max(0,(it.qty||0)-ln.qty); });
+      db.orders.unshift(order); saveDB(db);
+      currentLines=[]; renderLines(); renderItems(); renderOrders();
+      showInvoice(order);
+    }
+
+    function renderOrders(){
+      const db = loadDB();
+      const tbody = $('ordersTable').querySelector('tbody');
+      tbody.innerHTML = db.orders.map(o=>{
+        const cl = db.clients.find(c=>c.id==o.clientId);
+        return `<tr>
+          <td>${o.id}</td><td>${o.date}</td><td>${cl?.name||''}</td><td>${o.lines.length}</td><td>${fmt(o.total)}</td>
+          <td><button class='btn' onclick='showInvoiceById(${o.id})'>عرض</button></td>
+        </tr>`
+      }).join('');
+    }
+
+    // ===== Invoice + QR =====
+    window.showInvoiceById = (id)=>{
+      const db = loadDB();
+      const order = db.orders.find(o=>o.id==id); if(order) showInvoice(order);
+    }
+    function showInvoice(order){
+      const db = loadDB();
+      const cl = db.clients.find(c=>c.id==order.clientId);
+      const st = db.settings||{};
+      // Header
+      $('invCompany').textContent = st.name||'—';
+      $('invAddr').textContent = `${st.addr||''} – ${st.city||''}`;
+      $('invCRVAT').textContent = `س.ت: ${st.cr||'-'} | ضريبة: ${st.vat||'-'}`;
+
+      $('invNo').textContent = order.id;
+      $('invDate').textContent = order.date;
+      $('invClient').textContent = `${cl?.name||''} – ${cl?.city||''}`;
+      $('invNote').textContent = order.note||'';
+
+      const tbody = $('invBody');
+      tbody.innerHTML = order.lines.map((ln,idx)=>{
+        const it = db.items.find(i=>i.id==ln.itemId);
+        const tot = (it?.cost||0)*ln.qty;
+        return `<tr><td>${idx+1}</td><td>${it?.name||''} (${it?.section||''})</td><td>${fmt(it?.cost||0)}</td><td>${ln.qty}</td><td>${fmt(tot)}</td></tr>`
+      }).join('');
+      $('invTotal').textContent = fmt(order.total);
+
+      $('invoiceModal').classList.add('open');
+
+      // QR payload: مختصر يحتوي معلومات أساسية
+      const payload = {
+        inv: order.id,
+        date: order.date,
+        total: Number(order.total.toFixed(2)),
+        seller: {name: st.name||'', vat: st.vat||''},
+        buyer: {name: cl?.name||'', vat: cl?.vat||''}
+      };
+      const qrDiv = $('qrcode');
+      console.log('Generating QR for invoice', payload);
+      try {
+        qrDiv.innerHTML = '';
+        qrDiv.style.border = '1px solid red';
+        new QRCode(qrDiv, {text: order.id.toString(), width: 120, height: 120});
+        console.log('QR generated successfully');
+      } catch(e) {
+        console.log('QR generation error:', e);
+        qrDiv.innerHTML = '<div style="width:120px;height:120px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:12px;color:#666;">QR Error</div>';
+      }
+    }
+    $('closeInv').onclick = ()=> $('invoiceModal').classList.remove('open');
+    window.addEventListener('keydown',e=>{ if(e.key==='Escape') $('invoiceModal').classList.remove('open'); });
+
+    // ===== Landing Search =====
+    function fillLandingSections(){
+      const db = loadDB();
+      $('landingSection').innerHTML = `<option value="">كل الأقسام</option>` + db.sections.map(s=>`<option>${s}</option>`).join('');
+    }
+    $('landingSearchBtn').onclick = landingSearch;
+    $('landingClear').onclick = ()=>{$('landingSection').value='';$('landingSort').value='';$('landingQuery').value='';landingSearch();}
+    function landingSearch(){
+      const db = loadDB();
+      let arr = [...db.items];
+      const sec = $('landingSection').value; if(sec) arr = arr.filter(i=>i.section===sec);
+      const sort = $('landingSort').value; if(sort==='asc') arr.sort((a,b)=>a.cost-b.cost); if(sort==='desc') arr.sort((a,b)=>b.cost-a.cost);
+      const q = $('landingQuery').value.trim(); if(q) arr = arr.filter(i=> i.name.includes(q));
+      $('landingMeta').innerHTML = [sec?`<span class='pill'>قسم: ${sec}</span>`:'', sort?`<span class='pill'>فرز: ${sort==='asc'?'الأقل سعراً':'الأعلى سعراً'}</span>`:'', q?`<span class='pill'>نص: ${q}</span>`:''].join('');
+      $('landingResults').innerHTML = arr.length? (`<table><thead><tr><th>#</th><th>القسم</th><th>الصنف</th><th>التكلفة</th><th>المتاح</th></tr></thead><tbody>` + arr.map((i,idx)=>`<tr><td>${idx+1}</td><td>${i.section}</td><td>${i.name}</td><td>${fmt(i.cost)}</td><td>${i.qty}</td></tr>`).join('') + `</tbody></table>`) : '<div class="muted">لا توجد نتائج</div>';
+    }
+
+    // City search (companies + clients)
+    $('citySearchBtn').onclick = ()=>{
+      const q = $('cityQuery').value.trim();
+      const db = loadDB();
+      const cos = db.companies.filter(c=> !q || (c.city||'').includes(q));
+      const cls = db.clients.filter(c=> !q || (c.city||'').includes(q));
+      $('cityResults').innerHTML = `
+        <div class='card'>
+          <h4>شركات/موردون</h4>
+          ${cos.length? `<ul>${cos.map(c=>`<li>${c.name} – ${c.city} – س.ت ${c.cr||'-'} – ضريبة ${c.vat||'-'}</li>`).join('')}</ul>` : '<div class="muted">لا يوجد</div>'}
+        </div>
+        <div class='card'>
+          <h4>عملاء</h4>
+          ${cls.length? `<ul>${cls.map(c=>`<li>${c.name} – ${c.city} – س.ت ${c.cr||'-'} – ضريبة ${c.vat||'-'} – مسئول ${c.contact||'-'} – ${c.mobile||''}</li>`).join('')}</ul>` : '<div class="muted">لا يوجد</div>'}
+        </div>`;
+    }
+
+    // ===== Settings =====
+    function loadSettingsForm(){
+      const st = loadDB().settings||{};
+      $('stName').value = st.name||''; $('stCity').value = st.city||''; $('stCR').value = st.cr||''; $('stVAT').value = st.vat||''; $('stAddr').value = st.addr||'';
+    }
+    $('saveSettings').onclick = ()=>{
+      const db = loadDB();
+      db.settings = {name:$('stName').value.trim(), city:$('stCity').value.trim(), cr:$('stCR').value.trim(), vat:$('stVAT').value.trim(), addr:$('stAddr').value.trim()};
+      saveDB(db); alert('تم الحفظ');
+    }
+
+    // ===== Init =====
+    initDB();
+    renderSections(); fillSectionsSelects(); renderItems();
+    renderClients(); renderCompanies(); fillPOSelectors(); renderOrders();
+    fillLandingSections(); landingSearch();
+  </script>
+</body>
+</html>
