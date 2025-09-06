@@ -125,72 +125,77 @@ background: rgba(255, 255, 255, 0.9); /* لو الخلفية شفافة */
   }
 }
 
-    /* Layout */
-    .grid{display:grid;gap:16px}
-    .grid-2{grid-template-columns:1.2fr .8fr}
-    @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
-    @media(max-width:500px){.grid{gap:8px}}
-
-    /* Cards */
-    .card{background:var(--card);border:1px solid #dee2e6;border-radius:16px;padding:16px}
-    .card h3{margin:0 0 8px 0}
-    .muted{color:var(--sub);font-size:.9rem}
-    @media(max-width:500px){.card{padding:12px;border-radius:12px}}
-
-    /* Forms */
-    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
-    .col-12{grid-column:span 12}
-    .col-6{grid-column:span 6}
-    .col-4{grid-column:span 4}
-    .col-3{grid-column:span 3}
-    @media(max-width:700px){.col-6,.col-4,.col-3{grid-column:span 12}}
-    label{display:block;margin:6px 0 4px;color:#495057}
-    input,select,textarea{width:100%;padding:10px;background:#ffffff;border:1px solid #dee2e6;border-radius:12px;color:#212529;min-height:40px}
-    textarea{min-height:70px}
-    @media(max-width:500px){input,select,textarea{padding:8px;border-radius:8px;min-height:36px}label{margin:4px 0 2px}}
-
-    /* Buttons */
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .btn{padding:10px 14px;border:1px solid #dee2e6;background:#ffffff;border-radius:12px;color:#212529;cursor:pointer}
-    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-    .btn.success{background:var(--accent-2);border-color:var(--accent-2)}
-    .btn.danger{background:var(--danger);border-color:var(--danger)}
-    .btn.ghost{background:transparent;border-color:#dee2e6}
-    @media(max-width:500px){.btn{padding:8px 12px}}
-
-    /* Tables */
-    table{width:100%;border-collapse:collapse;border-radius:12px;overflow:auto}
-    th,td{padding:10px;border-bottom:1px solid #dee2e6;text-align:right;white-space:nowrap}
-    th{background:#f8f9fa;color:#6c757d}
-    tr:hover td{background:#e9ecef}
-    @media(max-width:700px){table{overflow-x:auto;display:block} th,td{min-width:80px; white-space: nowrap;}}
-
-    .pill{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #dee2e6;font-size:.8rem;color:#6c757d}
-    .flex{display:flex;gap:12px;align-items:center}
-    .right{margin-inline-start:auto}
-
-    /* Invoice Modal */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
-    .modal.open{display:flex}
-    @media(max-width:500px){.modal{padding:8px}}
-    .paper{background:#fff;color:#111;border-radius:12px;width:min(900px,100%);padding:20px}
-    @media(max-width:500px){.paper{padding:16px}}
-    .paper h2{margin:0}
-    .paper .row div{color:#111}
-    .invoice-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e5e7eb;padding-bottom:10px;margin-bottom:10px}
-    .invoice-meta{font-size:.95rem;color:#374151}
-    .print-only{display:none}
-    @media print{
-      header,.no-print{display:none!important}
-      .modal{position:static;display:block;background:none}
-      .paper{box-shadow:none;width:100%;}
-      .print-only{display:block}
-    }
-
-    /* Landing tags */
-    .tags{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
-
     
+  /* ===== Cards ===== */
+.card {
+  background: var(--card, #fff);
+  border: 1px solid #dee2e6;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+.muted { color: var(--sub, #6b7280); font-size: 0.9rem; margin-top:5px; }
+
+/* ===== Layout ===== */
+.grid { display: grid; gap: 20px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+@media(max-width:1024px){ .grid-2 { grid-template-columns: 1fr; } }
+
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+@media(max-width:640px){ .row { flex-direction: column; } }
+
+.col-12 { flex: 0 0 100%; }
+.col-8 { flex: 0 0 66.66%; }
+.col-6 { flex: 0 0 50%; }
+.col-4 { flex: 0 0 33.33%; }
+.col-3 { flex: 0 0 25%; }
+@media(max-width:700px){ .col-6,.col-4,.col-3{flex:0 0 100%} }
+
+.actions { display: flex; align-items: flex-end; gap: 10px; }
+@media(max-width:640px){ .actions { justify-content:flex-start; } }
+
+/* ===== Forms ===== */
+label{display:block;margin:6px 0 4px;color:#495057}
+input, select, textarea {
+  width:100%; padding:10px; border:1px solid #dee2e6; border-radius:12px; color:#212529;
+  min-height:40px; background:#fff;
+}
+textarea{min-height:70px}
+@media(max-width:500px){ input,select,textarea{padding:8px;border-radius:8px;min-height:36px} label{margin:4px 0 2px} }
+
+/* ===== Buttons ===== */
+.btn { padding: 8px 15px; border:none; border-radius:6px; cursor:pointer; font-size:.95rem; transition:.2s; }
+.btn.success { background-color:#16a34a; color:#fff; }
+.btn.ghost { background-color:#f3f4f6; color:#111; }
+.btn:hover { opacity:0.9; }
+
+/* ===== Tags ===== */
+.tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; padding:0; list-style:none; }
+.pill { background:#e0e7ff; color:#1e40af; padding:5px 10px; border-radius:20px; font-size:.85rem; }
+
+/* ===== Table ===== */
+.table-wrapper{overflow-x:auto;margin-top:10px;}
+table{width:100%;border-collapse:collapse;}
+th, td{padding:8px 10px;border:1px solid #ddd;font-size:0.9rem;text-align:left;}
+th{background:#f3f4f6;}
+
+/* ===== Invoice modal ===== */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px;z-index:100}
+.modal.open{display:flex}
+.paper{background:#fff;color:#111;border-radius:12px;width:min(900px,100%);padding:20px}
+@media(max-width:500px){.modal{padding:8px}.paper{padding:16px}}
+.paper h2{margin:0}
+.invoice-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #e5e7eb;padding-bottom:10px;margin-bottom:10px}
+.invoice-meta{font-size:.95rem;color:#374151}
+.print-only{display:none}
+@media print{
+  header,.no-print{display:none!important}
+  .modal{position:static;display:block;background:none}
+  .paper{box-shadow:none;width:100%}
+  .print-only{display:block}
+}
+
   </style>
 </head>
 <body>
@@ -201,10 +206,10 @@ background: rgba(255, 255, 255, 0.9); /* لو الخلفية شفافة */
 
     <!-- القائمة الأفقية (للكمبيوتر) -->
     <nav class="tabs no-print">
-        <a class="tab active" data-tab="landing">الواجهة العامة</a>
-        <a class="tab" data-tab="items">الأقسام والأصناف</a>
+        <a class="tab active" data-tab="landing"> الرئيسية</a>
+        <a class="tab" data-tab="items">الأقسام </a>
         <a class="tab" data-tab="clients">العملاء</a>
-        <a class="tab" data-tab="companies">الشركات/الموردون</a>
+        <a class="tab" data-tab="companies">الشركات</a>
         <a class="tab" data-tab="po">أمر توريد</a>
         <a class="tab" data-tab="settings">إعدادات المؤسسة</a>
       </nav>
@@ -213,10 +218,10 @@ background: rgba(255, 255, 255, 0.9); /* لو الخلفية شفافة */
     <div id="sideMenu" class="side-menu">
       <button class="close-btn" onclick="closeMenu()">✖</button>
       <nav>
-      <a class="tab" data-tab="landing">الواجهة العامة</a>
-      <a class="tab" data-tab="items">الأقسام والأصناف</a>
+      <a class="tab" data-tab="landing">الرئيسية </a>
+      <a class="tab" data-tab="items">الأقسام </a>
       <a class="tab" data-tab="clients">العملاء</a>
-      <a class="tab" data-tab="companies">الشركات/الموردون</a>
+      <a class="tab" data-tab="companies">الشركات</a>
       <a class="tab" data-tab="po">أمر توريد</a>
       <a class="tab" data-tab="settings">إعدادات المؤسسة</a>
     </nav>
@@ -270,78 +275,82 @@ background: rgba(255, 255, 255, 0.9); /* لو الخلفية شفافة */
 
     <!-- ITEMS -->
     <section class="grid grid-2" id="tab-items" style="display:none">
-      <div class="card">
-        <h3>إضافة قسم</h3>
-        <div class="row">
-          <div class="col-8">
-            <label>اسم القسم</label>
-            <input id="secName" placeholder="أدوات مكتبية">
-          </div>
-          <div class="col-4 actions">
-            <button class="btn success" id="addSectionBtn">+ إضافة قسم</button>
-          </div>
-        </div>
-        <div class="muted" id="sectionsCount"></div>
-        <ul id="sectionsList" class="tags"></ul>
-      </div>
 
-      <div class="card">
-        <h3>إضافة صنف</h3>
-        <div class="row">
-          <div class="col-6">
-            <label>القسم</label>
-            <select id="itemSection"></select>
-          </div>
-          <div class="col-6">
-            <label>اسم الصنف</label>
-            <input id="itemName" placeholder="دفتر A4">
-          </div>
-          <div class="col-4">
-            <label>سعر التكلفة</label>
-            <input type="number" id="itemCost" placeholder="0" min="0" step="0.01">
-          </div>
-          <div class="col-4">
-            <label>الكمية</label>
-            <input type="number" id="itemQty" placeholder="0" min="0" step="1">
-          </div>
-          <div class="col-4">
-            <label>ملاحظات</label>
-            <input id="itemNote" placeholder="مثال: جودة ممتازة">
-          </div>
-          <div class="col-12 actions">
-            <button class="btn success" id="addItemBtn">+ إضافة صنف</button>
-            <button class="btn ghost" id="clearItemBtn">مسح</button>
-          </div>
-        </div>
+  <!-- إضافة قسم -->
+  <div class="card">
+    <h3>إضافة قسم</h3>
+    <div class="row">
+      <div class="col-8">
+        <label for="secName">اسم القسم</label>
+        <input id="secName" placeholder="أدوات مكتبية">
       </div>
+      <div class="col-4 actions">
+        <button class="btn success" id="addSectionBtn">+ إضافة قسم</button>
+      </div>
+    </div>
+    <div class="muted" id="sectionsCount"></div>
+    <ul id="sectionsList" class="tags"></ul>
+  </div>
 
-      <div class="card col-12">
-        <h3>الأصناف</h3>
-        <div class="row">
-          <div class="col-4"><input id="itemsFilterText" placeholder="بحث…"></div>
-          <div class="col-4">
-            <select id="itemsFilterSection"></select>
-          </div>
-          <div class="col-4">
-            <select id="itemsSort">
-              <option value="">— ترتيب —</option>
-              <option value="asc">الأقل سعراً</option>
-              <option value="desc">الأعلى سعراً</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-top:10px;overflow:auto">
-          <table id="itemsTable">
-            <thead>
-              <tr>
-                <th>#</th><th>القسم</th><th>الصنف</th><th>التكلفة</th><th>الكمية</th><th>ملاحظات</th><th>إجراءات</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+  <!-- إضافة صنف -->
+  <div class="card">
+    <h3>إضافة صنف</h3>
+    <div class="row">
+      <div class="col-6">
+        <label for="itemSection">القسم</label>
+        <select id="itemSection"></select>
       </div>
-    </section>
+      <div class="col-6">
+        <label for="itemName">اسم الصنف</label>
+        <input id="itemName" placeholder="دفتر A4">
+      </div>
+      <div class="col-4">
+        <label for="itemCost">سعر التكلفة</label>
+        <input type="number" id="itemCost" placeholder="0" min="0" step="0.01">
+      </div>
+      <div class="col-4">
+        <label for="itemQty">الكمية</label>
+        <input type="number" id="itemQty" placeholder="0" min="0" step="1">
+      </div>
+      <div class="col-4">
+        <label for="itemNote">ملاحظات</label>
+        <input id="itemNote" placeholder="مثال: جودة ممتازة">
+      </div>
+      <div class="col-12 actions">
+        <button class="btn success" id="addItemBtn">+ إضافة صنف</button>
+        <button class="btn ghost" id="clearItemBtn">مسح</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- جدول الأصناف -->
+  <div class="card col-12">
+    <h3>الأصناف</h3>
+    <div class="row filter-row">
+      <div class="col-4"><input id="itemsFilterText" placeholder="بحث…"></div>
+      <div class="col-4"><select id="itemsFilterSection"></select></div>
+      <div class="col-4">
+        <select id="itemsSort">
+          <option value="">— ترتيب —</option>
+          <option value="asc">الأقل سعراً</option>
+          <option value="desc">الأعلى سعراً</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>#</th><th>القسم</th><th>الصنف</th><th>التكلفة</th><th>الكمية</th><th>ملاحظات</th><th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
 
     <!-- CLIENTS -->
     <section class="grid grid-2" id="tab-clients" style="display:none">
